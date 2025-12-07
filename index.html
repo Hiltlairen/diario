@@ -1,0 +1,146 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Diario de Viaje - Mi Amor ❤️</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css">
+    <link rel="stylesheet" href="style.css">
+    <link href="https://fonts.googleapis.com/css2?family=Dancing+Script:wght@400;700&family=Poppins:wght@300;400;500;600&display=swap" rel="stylesheet">
+    <link rel="icon" type="image/x-icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><text y=%22.9em%22 font-size=%2290%22>❤️</text></svg>">
+</head>
+<body>
+    <!-- Contenedor principal -->
+    <div class="container">
+        <!-- Encabezado -->
+        <header>
+            <h1><i class="fas fa-heart"></i> Diario de Viaje</h1>
+            <p class="subtitle">Para mi amor durante estos días especiales</p>
+            <div class="date-info">
+                <p>Hoy es: <span id="current-date"></span></p>
+                <p>Días restantes de viaje: <span id="days-remaining"></span></p>
+            </div>
+        </header>
+
+        <!-- Contenido principal -->
+        <main class="main-content">
+            <!-- Panel izquierdo: Calendario -->
+            <div class="calendar-section">
+                <div class="calendar-container">
+                    <div class="calendar-header">
+                        <button id="prev-month" class="nav-btn" disabled><i class="fas fa-chevron-left"></i></button>
+                        <h2 id="calendar-title">Diciembre 2024</h2>
+                        <button id="next-month" class="nav-btn"><i class="fas fa-chevron-right"></i></button>
+                    </div>
+                    
+                    <div class="calendar" id="calendar">
+                        <!-- Calendario se genera dinámicamente -->
+                    </div>
+                    
+                    <div class="legend">
+                        <div class="legend-item"><span class="legend-box today"></span> Hoy</div>
+                        <div class="legend-item"><span class="legend-box completed"></span> Completado</div>
+                        <div class="legend-item"><span class="legend-box special"></span> Festivo</div>
+                        <div class="legend-item"><span class="legend-box future"></span> Próximo</div>
+                    </div>
+                </div>
+                
+                <!-- Consejo del día -->
+                <div class="daily-advice" id="daily-advice">
+                    <h3><i class="fas fa-lightbulb"></i> Consejo del día</h3>
+                    <p id="advice-text">Cargando consejo...</p>
+                    <div class="advice-footer">
+                        <small>Recuerda que te amo cada día un poco más ❤️</small>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Panel derecho: Diario -->
+            <div class="journal-section" id="journal-section">
+                <div class="journal-header">
+                    <h2><i class="fas fa-book-open"></i> Mi día de hoy</h2>
+                    <p id="journal-date">Selecciona una fecha en el calendario</p>
+                </div>
+                
+                <!-- Estadísticas del día -->
+                <div class="day-stats">
+                    <div class="stat-card">
+                        <h4><i class="fas fa-star"></i> ¿Cómo te fue hoy?</h4>
+                        <div class="rating-stars">
+                            <i class="fas fa-star" data-rating="1"></i>
+                            <i class="fas fa-star" data-rating="2"></i>
+                            <i class="fas fa-star" data-rating="3"></i>
+                            <i class="fas fa-star" data-rating="4"></i>
+                            <i class="fas fa-star" data-rating="5"></i>
+                        </div>
+                        <input type="hidden" id="day-rating" value="0">
+                    </div>
+                    
+                    <div class="stat-card">
+                        <h4><i class="fas fa-utensils"></i> ¿Qué almorzaste?</h4>
+                        <div class="lunch-rating">
+                            <div class="rating-stars lunch">
+                                <i class="fas fa-star" data-lunch="1"></i>
+                                <i class="fas fa-star" data-lunch="2"></i>
+                                <i class="fas fa-star" data-lunch="3"></i>
+                                <i class="fas fa-star" data-lunch="4"></i>
+                                <i class="fas fa-star" data-lunch="5"></i>
+                            </div>
+                            <input type="text" id="lunch-description" placeholder="Describe tu almuerzo...">
+                        </div>
+                        <input type="hidden" id="lunch-rating" value="0">
+                    </div>
+                    
+                    <div class="stat-card">
+                        <h4><i class="fas fa-users"></i> Personas con las que hablaste</h4>
+                        <div class="people-counter">
+                            <button id="people-decrease" class="counter-btn">-</button>
+                            <input type="number" id="people-count" min="0" max="50" value="0">
+                            <button id="people-increase" class="counter-btn">+</button>
+                        </div>
+                        <small>¿Hablaste con alguien interesante?</small>
+                    </div>
+                </div>
+                
+                <!-- Entrada del diario -->
+                <div class="journal-entry">
+                    <h4><i class="fas fa-pen"></i> Reflexiona sobre tu día</h4>
+                    <textarea id="journal-text" placeholder="Escribe aquí cómo te fue hoy, qué aprendiste, qué te hizo sonreír... Este espacio es solo para ti."></textarea>
+                    
+                    <div class="journal-actions">
+                        <button id="save-entry" class="btn-primary"><i class="fas fa-save"></i> Guardar día</button>
+                        <button id="clear-entry" class="btn-secondary"><i class="fas fa-eraser"></i> Limpiar</button>
+                    </div>
+                    
+                    <div class="saved-message" id="saved-message">
+                        <i class="fas fa-check-circle"></i> ¡Día guardado exitosamente!
+                    </div>
+                </div>
+                
+                <!-- Entradas previas -->
+                <div class="previous-entries" id="previous-entries">
+                    <h4><i class="fas fa-history"></i> Días anteriores</h4>
+                    <div id="entries-list">
+                        <p class="empty-message">Aún no hay días completados. ¡Comienza escribiendo sobre tu día de hoy!</p>
+                    </div>
+                </div>
+            </div>
+        </main>
+        
+        <!-- Animaciones especiales -->
+        <div id="snow-effect" class="special-effect"></div>
+        <div id="fireworks-effect" class="special-effect"></div>
+        <div id="hearts-effect" class="special-effect"></div>
+        
+        <!-- Footer -->
+        <footer>
+            <p>Creado con ❤️ para mi novia. Que cada día de tu viaje esté lleno de aprendizajes y buenos momentos.</p>
+            <p class="footer-note">Tu diario se guarda automáticamente en tu navegador. Los datos no se envían a ningún servidor.</p>
+        </footer>
+    </div>
+
+    <!-- Scripts -->
+    <script src="script.js"></script>
+    <script src="animaciones.js"></script>
+</body>
+</html>
